@@ -63,7 +63,7 @@ public class TerminalApp {
                     System.out.println("5. Usuń książkę");
                 }
 
-                System.out.println("8. Wyloguj się");
+                System.out.println("6. Wyloguj się");
                 System.out.println("0. Wyjdź z programu");
                 System.out.print("Twój wybór: ");
                 String choice = scanner.nextLine();
@@ -102,10 +102,17 @@ public class TerminalApp {
                             if (currentRole != Role.ADMIN) { System.out.println("=> Brak uprawnień!"); break; }
                             System.out.print("Podaj ID książki do usunięcia: ");
                             Long deleteId = Long.parseLong(scanner.nextLine());
+                            System.out.println("Czy na pewno chcesz usunąć książkę o ID: " + deleteId + " ?");
+                            System.out.println("1. Tak");
+                            System.out.println("2. Nie");
+                            System.out.print("Twój Wybór: ");
+                            String confirm = scanner.nextLine();
+                            if (confirm.equals("1")){
                             libraryService.deleteBook(deleteId);
-                            System.out.println("=> Książka została usunięta!");
+                            System.out.println("=> Książka została usunięta!");}
+                            else {System.out.println("Przerwano operację");}
                             break;
-                        case "8":
+                        case "6":
                             authService.logout();
                             System.out.println("=> Wylogowano pomyślnie.");
                             break;
