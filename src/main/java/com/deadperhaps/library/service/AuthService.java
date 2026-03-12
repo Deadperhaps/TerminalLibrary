@@ -3,16 +3,13 @@ package com.deadperhaps.library.service;
 import org.mindrot.jbcrypt.BCrypt;
 import com.deadperhaps.library.domain.User;
 import com.deadperhaps.library.repository.UserRepository;
-
+import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
     private User loggedInUser;
-
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public boolean login(String username, String password) {
         Optional<User> userOpt = userRepository.findByUsername(username);

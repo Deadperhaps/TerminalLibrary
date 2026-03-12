@@ -3,17 +3,13 @@ package com.deadperhaps.library.service;
 import com.deadperhaps.library.domain.Book;
 import com.deadperhaps.library.domain.Role;
 import com.deadperhaps.library.repository.BookRepository;
-
+import lombok.RequiredArgsConstructor;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class LibraryService {
     private final BookRepository bookRepository;
     private final AuthService authService;
-
-    public LibraryService(BookRepository bookRepository, AuthService authService) {
-        this.bookRepository = bookRepository;
-        this.authService = authService;
-    }
 
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
