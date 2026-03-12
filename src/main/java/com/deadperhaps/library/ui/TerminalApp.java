@@ -84,6 +84,9 @@ public class TerminalApp {
                             String title = scanner.nextLine();
                             System.out.print("Podaj autora: ");
                             String author = scanner.nextLine();
+                            if (title == null || title.trim().isEmpty() || author == null || author.trim().isEmpty()) {
+                                System.out.println("=> Błąd: Tytuł i autor nie mogą być puste!");
+                                break;}
                             libraryService.addBook(title, author);
                             System.out.println("=> Książka została dodana!");
                             break;
@@ -91,10 +94,15 @@ public class TerminalApp {
                             if (currentRole != Role.ADMIN) { System.out.println("=> Brak uprawnień!"); break; }
                             System.out.print("Podaj ID książki do edycji: ");
                             Long editId = Long.parseLong(scanner.nextLine());
+                            boolean existsToEdit = libraryService.getAllBooks().stream().anyMatch(b -> b.getId().equals(editId));
+                            if (!existsToEdit) {System.out.println("=> Błąd: Książka o podanym ID nie istnieje w bibliotece!"); break;}
                             System.out.print("Podaj nowy tytuł: ");
                             String newTitle = scanner.nextLine();
                             System.out.print("Podaj nowego autora: ");
                             String newAuthor = scanner.nextLine();
+                            if (newTitle == null || newTitle.trim().isEmpty() || newAuthor == null || newAuthor.trim().isEmpty()) {
+                                System.out.println("=> Błąd: Tytuł i autor nie mogą być puste!");
+                                break;}
                             libraryService.updateBook(editId, newTitle, newAuthor);
                             System.out.println("=> Książka została zaktualizowana!");
                             break;
@@ -102,6 +110,8 @@ public class TerminalApp {
                             if (currentRole != Role.ADMIN) { System.out.println("=> Brak uprawnień!"); break; }
                             System.out.print("Podaj ID książki do usunięcia: ");
                             Long deleteId = Long.parseLong(scanner.nextLine());
+                            boolean existsToDelete = libraryService.getAllBooks().stream().anyMatch(b -> b.getId().equals(deleteId));
+                            if (!existsToDelete) {System.out.println("=> Błąd: Książka o podanym ID nie istnieje w bibliotece!"); break;}
                             System.out.println("Czy na pewno chcesz usunąć książkę o ID: " + deleteId + " ?");
                             System.out.println("1. Tak");
                             System.out.println("2. Nie");
